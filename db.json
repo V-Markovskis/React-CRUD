@@ -1,0 +1,13 @@
+{
+  "movies": [
+    {
+      "nickname": "asda",
+      "movie": "dasd",
+      "review": "asdas",
+      "evaluation": "4",
+      "image": "adasda",
+      "creationTime": "2023-12-02T16:37:24.926Z",
+      "id": 1
+    }
+  ]
+}
