@@ -3,7 +3,8 @@ import axios from 'axios'
 import React, {useState} from "react";
 import IMovie from "./components/movieType/movieContainer.tsx";
 import DisplayForm from "./components/formToDisplay/displayForm.tsx";
-
+import postCreatedForm from "./callToDatabase/postMovies.tsx";
+import getAllMovies from "./callToDatabase/getMovies.tsx";
 
 
 function App() {
@@ -15,6 +16,16 @@ function App() {
 
     const [fullReview, setFullReview] = useState<IMovie[]>([]);
 
+    const { movies } = getAllMovies();
+
+
+    // if (movies !== null) {
+    //     movies.forEach((movie, key) => {
+    //         <DisplayForm key={key} movieToDisplay={movie} />
+    //     })
+    //     console.log("For-each triggered");
+    // }
+
     const createMovieForm = () => {
         const newMovie = {
             nickname: currentUser,
@@ -22,9 +33,14 @@ function App() {
             review: movieReview,
             evaluation: movieEvaluation,
             image: 'https://images.pexels.com/photos/5662857/pexels-photo-5662857.png?cs=srgb&dl=pexels-tima-miroshnichenko-5662857.jpg&fm=jpg'
-        }
+        };
+
+        //post data in DB
+        postCreatedForm(newMovie);
+
         console.log('createMovieForm CREATED', newMovie);
         setFullReview([...fullReview, newMovie]);
+
         console.log('fullReview', fullReview);
         setCurrentUser('');
         setMovieToDiscuss('');
@@ -39,13 +55,19 @@ function App() {
         createMovieForm();
     }
 
-
-
     return (
         <>
           <section>
               <div className="js-movie-container movie-container">
                   <div className="createdForm">
+                      {movies !== null ? (
+                          movies.map((movie: IMovie, key: number) => (
+                              <DisplayForm key={key} movieToDisplay={movie} />
+                          ))
+                      ) : (
+                          <p>Loading movies...</p>
+                      )}
+
                       {fullReview.map((movie: IMovie, key: number) =>
                       <DisplayForm key={key} movieToDisplay={movie} />)}
                   </div>
