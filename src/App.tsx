@@ -1,30 +1,36 @@
 import './App.css'
 import axios from 'axios'
-import ImageContainer from "./components/ImageContainer/imageContainer.tsx";
-import {useState} from "react";
+import React, {useState} from "react";
 import IMovie from "./components/movieType/movieContainer.tsx";
+import DisplayForm from "./components/formToDisplay/displayForm.tsx";
 
 
 
 function App() {
-    const [nickname, setNickname] = useState('');
+    const [currentUser, setCurrentUser] = useState('');
     const [movieToDiscuss, setMovieToDiscuss] = useState('');
-    const [review, setReview] = useState('');
-    const [evaluation, setEvaluation] = useState(0);
+    const [movieReview, setMovieReview] = useState('');
+    const [movieEvaluation, setMovieEvaluation] = useState(1);
     const [imageUrl, setImageUrl] = useState('');
 
     const [fullReview, setFullReview] = useState<IMovie[]>([]);
 
     const createMovieForm = () => {
         const newMovie = {
-            nickname: nickname,
+            nickname: currentUser,
             movie: movieToDiscuss,
-            review: review,
-            evaluation: evaluation,
-            image: imageUrl
+            review: movieReview,
+            evaluation: movieEvaluation,
+            image: 'https://images.pexels.com/photos/5662857/pexels-photo-5662857.png?cs=srgb&dl=pexels-tima-miroshnichenko-5662857.jpg&fm=jpg'
         }
-        console.log('createMovieForm CREATED', createMovieForm);
-        setFullReview([...fullReview, newMovie])
+        console.log('createMovieForm CREATED', newMovie);
+        setFullReview([...fullReview, newMovie]);
+        console.log('fullReview', fullReview);
+        setCurrentUser('');
+        setMovieToDiscuss('');
+        setMovieReview('');
+        setMovieEvaluation(1);
+        setImageUrl('');
     }
 
     const handleSubmit = (event: any) => {
@@ -38,20 +44,24 @@ function App() {
     return (
         <>
           <section>
-              {/*<ImageContainer />*/}
-              <div className="js-movie-container movie-container"></div>
+              <div className="js-movie-container movie-container">
+                  <div className="createdForm">
+                      {fullReview.map((movie: IMovie, key: number) =>
+                      <DisplayForm key={key} movieToDisplay={movie} />)}
+                  </div>
+              </div>
           </section>
 
 
-          <form className="js-form-container form-container" onSubmit={handleSubmit}>
+          <form className="form-container" onSubmit={handleSubmit}>
               <h2>Add new movie</h2>
               <label htmlFor="nickname">Your Nickname:</label>
               <input
                   type="text"
                   name="nickname"
-                  value={nickname}
+                  value={currentUser}
                   onChange={(event) => {
-                      setNickname(event.target.value);
+                      setCurrentUser(event.target.value);
                   }}
                   placeholder="Enter your nickname"
                   className="review-main-details"
@@ -74,9 +84,9 @@ function App() {
                   name="review"
                   rows={4}
                   cols={50}
-                  value={review}
+                  value={movieReview}
                   onChange={(event) => {
-                      setReview(event.target.value)
+                      setMovieReview(event.target.value)
                   }}
                   placeholder="Enter your thoughts"
                   className="review-main-details"
@@ -87,9 +97,9 @@ function App() {
               <input
                   type="number"
                   name="movie score"
-                  value={evaluation}
+                  value={movieEvaluation}
                   onChange={(event) => {
-                      setEvaluation(Number(event.target.value));
+                      setMovieEvaluation(Number(event.target.value));
                   }}
                   placeholder="Evaluation (1-10)"
                   min="1"
