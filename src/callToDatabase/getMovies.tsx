@@ -1,7 +1,5 @@
-import axios from "axios";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import IMovie from "../components/movieType/movieContainer.tsx";
-import DisplayForm from "../components/formToDisplay/displayForm.tsx";
 const getAllMovies =  () => {
     const [movies, setMovies] = useState<IMovie[]>([]);
 

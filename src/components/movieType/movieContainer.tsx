@@ -1,4 +1,5 @@
 interface IMovie {
+    id: number
     image: string;
     nickname: string;
     movie: string;
