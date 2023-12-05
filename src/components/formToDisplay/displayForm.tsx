@@ -1,4 +1,4 @@
-import IMovie from "../movieType/movieContainer.tsx";
+import IMovie from "../movieType/movieInterface.tsx";
 
 interface FormValues {
     movieToDisplay: IMovie;

@@ -1,11 +1,10 @@
 import './App.css'
-import axios from 'axios'
-import React, {useState} from "react";
-import IMovie from "./components/movieType/movieContainer.tsx";
+import React, {useEffect, useState} from "react";
+import IMovie from "./components/movieType/movieInterface.tsx";
 import DisplayForm from "./components/formToDisplay/displayForm.tsx";
 import postCreatedForm from "./callToDatabase/postMovies.tsx";
-import getAllMovies from "./callToDatabase/getMovies.tsx";
 import deleteMovies from "./callToDatabase/deleteMovies.tsx";
+import getMovies from "./callToDatabase/getMovies.tsx";
 
 
 function App() {
@@ -14,11 +13,14 @@ function App() {
     const [movieReview, setMovieReview] = useState('');
     const [movieEvaluation, setMovieEvaluation] = useState(1);
     const [imageUrl, setImageUrl] = useState('');
+    const [movies, setMovies] = useState<IMovie[]>([]);
 
-    const [fullReview, setFullReview] = useState<IMovie[]>([]);
+    useEffect(() => {
+        getMovies(setMovies);
+    }, [])
 
-    let currentId = 1;
-    const { movies } = getAllMovies();
+
+    let currentId = 0;
 
     if (movies !== null) {
         currentId += movies.length;
@@ -26,7 +28,7 @@ function App() {
 
     const createMovieForm = () => {
         const newMovie = {
-            id: currentId,
+            id: currentId + 1,
             nickname: currentUser,
             movie: movieToDiscuss,
             review: movieReview,
@@ -38,12 +40,10 @@ function App() {
 
         //post data in DB
         postCreatedForm(newMovie);
+        getMovies(setMovies); //populate setMovies
 
-        //update data locally
         console.log('createMovieForm CREATED', newMovie);
-        setFullReview([...fullReview, newMovie]);
 
-        console.log('fullReview', fullReview);
         setCurrentUser('');
         setMovieToDiscuss('');
         setMovieReview('');
@@ -57,22 +57,11 @@ function App() {
         createMovieForm();
     }
 
-    // if (movies !== null) {
-    //     const deleteMovieFromLoaded = (id: number) => {
-    //         setFullReview(fullReview.filter( (movie) => {
-    //             return movie.id !== id;
-    //         }))
-    //     }
-    // }
-
-
 
     const deleteCurrentMovie = (id: number) => {
-        setFullReview(fullReview.filter( (movie) => {
-            return movie.id !== id;
-        }))
         //delete movie with passed id
-        deleteMovies(id);
+        deleteMovies(id, ()  => getMovies(setMovies))
+        console.log('DELETE TRIGGER')
     }
 
     return (
@@ -80,14 +69,10 @@ function App() {
           <section>
               <div className="js-movie-container movie-container">
                   <div className="createdForm">
-                      {/*{display data from db}*/}
+                      {/*{display all movie reviews}*/}
                       { movies && movies.map((movie: IMovie, key: number) => (
                           <DisplayForm key={key} movieToDisplay={movie} deleteCurrentMovie={deleteCurrentMovie}/>
                       ))}
-
-                      {/*{display data when submit button triggered}*/}
-                      { fullReview.map((movie: IMovie, key: number) =>
-                      <DisplayForm key={key} movieToDisplay={movie} deleteCurrentMovie={deleteCurrentMovie}/>)}
                   </div>
               </div>
           </section>
