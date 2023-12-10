@@ -1,3 +1,20 @@
 {
-  "movies": []
+  "movies": [
+    {
+      "id": 2,
+      "nickname": "asd",
+      "movie": "asd",
+      "review": "asd",
+      "evaluation": 1,
+      "image": "https://images.pexels.com/photos/5662857/pexels-photo-5662857.png?cs=srgb&dl=pexels-tima-miroshnichenko-5662857.jpg&fm=jpg"
+    },
+    {
+      "id": 3,
+      "nickname": "sdasda",
+      "movie": "sada",
+      "review": "dasd",
+      "evaluation": 1,
+      "image": "https://images.pexels.com/photos/5662857/pexels-photo-5662857.png?cs=srgb&dl=pexels-tima-miroshnichenko-5662857.jpg&fm=jpg"
+    }
+  ]
 }

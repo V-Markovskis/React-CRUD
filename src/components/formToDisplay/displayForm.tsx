@@ -3,9 +3,10 @@ import IMovie from "../movieType/movieInterface.tsx";
 interface FormValues {
     movieToDisplay: IMovie;
     deleteCurrentMovie(id: number): void;
+    editMovie(movie: IMovie): void;
 }
 
-const DisplayForm = ({movieToDisplay, deleteCurrentMovie}: FormValues) => {
+const DisplayForm = ({movieToDisplay, deleteCurrentMovie, editMovie}: FormValues) => {
     return (
         <div>
             <img src={movieToDisplay.image} alt="Image here" width={200}/>
@@ -17,6 +18,11 @@ const DisplayForm = ({movieToDisplay, deleteCurrentMovie}: FormValues) => {
                 deleteCurrentMovie(movieToDisplay.id)
                 console.log('BUTTON DELETE CLICKED')
             }}>Delete</button>
+            <button onClick={ () => {
+                // EDIT BUTTON LOGIC HERE
+                editMovie(movieToDisplay)
+                console.log('BUTTON EDIT CLICKED')
+            }}>Edit</button>
         </div>
     )
 }
