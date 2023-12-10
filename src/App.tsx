@@ -90,10 +90,6 @@ function App() {
         console.log('DELETE TRIGGER')
     }
 
-    // const handleSave = (id: number) => {
-    //     putMovie(movie.id, () => getMovies(setMovies)) // SHOULD NOT BE CALLED HERE?
-    // }
-
     return (
         <>
           <section>
@@ -107,152 +103,157 @@ function App() {
               </div>
           </section>
 
+          <div className='global-form-container'>
+              <form className="form-container" onSubmit={handleSubmit}>
+                  <h2>Add new movie</h2>
+                  <label htmlFor="nickname">Your Nickname:</label>
+                  <input
+                      type="text"
+                      name="nickname"
+                      value={currentUser}
+                      onChange={(event) => {
+                          setCurrentUser(event.target.value);
+                      }}
+                      placeholder="Enter your nickname"
+                      className="review-main-details"
+                  />
 
-          <form className="form-container" onSubmit={handleSubmit}>
-              <h2>Add new movie</h2>
-              <label htmlFor="nickname">Your Nickname:</label>
-              <input
-                  type="text"
-                  name="nickname"
-                  value={currentUser}
-                  onChange={(event) => {
-                      setCurrentUser(event.target.value);
-                  }}
-                  placeholder="Enter your nickname"
-                  className="review-main-details"
-              />
+                  <label htmlFor="movie title">Enter Movie:</label>
+                  <input
+                      type="text"
+                      name="movie title"
+                      value={movieToDiscuss}
+                      onChange={(event) => {
+                          setMovieToDiscuss(event.target.value);
+                      }}
+                      placeholder="Movie to be discussed"
+                      className="review-main-details"
+                  />
 
-              <label htmlFor="movie title">Enter Movie:</label>
-              <input
-                  type="text"
-                  name="movie title"
-                  value={movieToDiscuss}
-                  onChange={(event) => {
-                      setMovieToDiscuss(event.target.value);
-                  }}
-                  placeholder="Movie to be discussed"
-                  className="review-main-details"
-              />
+                  <label htmlFor="review">Your review:</label>
+                  <textarea
+                      name="review"
+                      rows={4}
+                      cols={50}
+                      value={movieReview}
+                      onChange={(event) => {
+                          setMovieReview(event.target.value)
+                      }}
+                      placeholder="Enter your thoughts"
+                      className="review-main-details"
+                      maxLength={200}
+                  ></textarea>
 
-              <label htmlFor="review">Your review:</label>
-              <textarea
-                  name="review"
-                  rows={4}
-                  cols={50}
-                  value={movieReview}
-                  onChange={(event) => {
-                      setMovieReview(event.target.value)
-                  }}
-                  placeholder="Enter your thoughts"
-                  className="review-main-details"
-                  maxLength={200}
-              ></textarea>
+                  <label htmlFor="movie score">Movie score:</label>
+                  <input
+                      type="number"
+                      name="movie score"
+                      value={movieEvaluation}
+                      onChange={(event) => {
+                          setMovieEvaluation(Number(event.target.value));
+                      }}
+                      placeholder="Evaluation (1-10)"
+                      min="1"
+                      max="10"
+                      className="review-main-details"
+                  />
 
-              <label htmlFor="movie score">Movie score:</label>
-              <input
-                  type="number"
-                  name="movie score"
-                  value={movieEvaluation}
-                  onChange={(event) => {
-                      setMovieEvaluation(Number(event.target.value));
-                  }}
-                  placeholder="Evaluation (1-10)"
-                  min="1"
-                  max="10"
-                  className="review-main-details"
-              />
+                  <label htmlFor="image">Image URL:</label>
+                  <input
+                      type="text"
+                      id="image"
+                      name="image"
+                      value={imageUrl}
+                      onChange={(event) => {
+                          setImageUrl(event.target.value);
+                      }}
+                      className="review-main-details"
+                      placeholder="Post image URL"
+                  />
 
-              <label htmlFor="image">Image URL:</label>
-              <input
-                  type="text"
-                  id="image"
-                  name="image"
-                  value={imageUrl}
-                  onChange={(event) => {
-                      setImageUrl(event.target.value);
-                  }}
-                  className="review-main-details"
-                  placeholder="Post image URL"
-              />
+                  <button className="submit-button">Submit</button>
+              </form>
+                {editMode.id > -1 && (
+                    <form className='editForm' onSubmit={(event) => {
+                        event.preventDefault()
 
-              <button className="submit-button">Submit</button>
-          </form>
-            {editMode.id > -1 && (
-                <form className='editForm' onSubmit={(event) => {
-                    event.preventDefault()
-                    // putMovie(editMode.id, () => getMovies(setMovies))
-
-                    const newEditedMovie = movies.map((movie: IMovie) => {
-                        if (movie.id === editMode.id) {
-                            return {
-                                ...movie,
-                                nickname: editMode.nickname,
-                                movie: editMode.movie,
-                                review: editMode.review,
-                                evaluation: editMode.evaluation,
-                                image: editMode.image
+                        const newEditedMovie = movies.map((movie: IMovie) => {
+                            if (movie.id === editMode.id) {
+                                return {
+                                    ...movie,
+                                    nickname: editMode.nickname,
+                                    movie: editMode.movie,
+                                    review: editMode.review,
+                                    evaluation: editMode.evaluation,
+                                    image: editMode.image
+                                }
                             }
-                        }
-                        return movie
-                    })
-                    setMovies(newEditedMovie)
-                    putMovie(editMode, () => getMovies(setMovies))
-                    setEditMode(initialEditMode)
-                }}>
-                    <h1>Edit movie</h1>
-                    <input type='text'
-                           name='nickname'
-                           value={editMode.nickname}
-                           onChange={(e) => {
-                               setEditMode({
-                                   ...editMode,
-                                   nickname: e.target.value
-                               })
-                           }}
-                    />
-                    <input type='text'
-                           name='movie'
-                           value={editMode.movie}
-                           onChange={(e) => {
-                               setEditMode({
-                                   ...editMode,
-                                   movie: e.target.value
-                               })
-                           }}
-                    />
-                    <input type='text'
-                           name='review'
-                           value={editMode.review}
-                           onChange={(e) => {
-                               setEditMode({
-                                   ...editMode,
-                                   review: e.target.value
-                               })
-                           }}
-                    />
-                    <input type='number'
-                           name='evaluation'
-                           value={editMode.evaluation}
-                           onChange={(e) => {
-                               setEditMode({
-                                   ...editMode,
-                                   evaluation: (Number(e.target.value))
-                               })
-                           }}
-                    />
-                    <input type='text'
-                           name='image'
-                           value={editMode.image}
-                           onChange={(e) => {
-                               setEditMode({
-                                   ...editMode,
-                                   image: e.target.value
-                               })
-                           }}
-                    />
-                    <button>Save</button>
-                </form>
-            )}
+                            return movie
+                        })
+                        setMovies(newEditedMovie)
+                        putMovie(editMode, () => getMovies(setMovies))
+                        setEditMode(initialEditMode)
+                    }}>
+                        <h2> Edit movie </h2>
+                        <label> Nickname: </label>
+                        <input type='text'
+                               name='nickname'
+                               value={editMode.nickname}
+                               onChange={(e) => {
+                                   setEditMode({
+                                       ...editMode,
+                                       nickname: e.target.value
+                                   })
+                               }}
+                        />
+                        <label> Movie: </label>
+                        <input type='text'
+                               name='movie'
+                               value={editMode.movie}
+                               onChange={(e) => {
+                                   setEditMode({
+                                       ...editMode,
+                                       movie: e.target.value
+                                   })
+                               }}
+                        />
+                        <label> Review: </label>
+                        <input type='text'
+                               name='review'
+                               value={editMode.review}
+                               onChange={(e) => {
+                                   setEditMode({
+                                       ...editMode,
+                                       review: e.target.value
+                                   })
+                               }}
+                        />
+                        <label> Movie score: </label>
+                            <input type='number'
+                                   name='evaluation'
+                                   value={editMode.evaluation}
+                                   onChange={(e) => {
+                                       setEditMode({
+                                           ...editMode,
+                                           evaluation: (Number(e.target.value))
+                                       })
+                                   }}
+                            />
+                        <label> Image URL: </label>
+                        <input type='text'
+                               name='image'
+                               value={editMode.image}
+                               onChange={(e) => {
+                                   setEditMode({
+                                       ...editMode,
+                                       image: e.target.value
+                                   })
+                               }}
+                        />
+                        <button>Save</button>
+                    </form>
+                )}
+          </div>
       </>
     )
 }

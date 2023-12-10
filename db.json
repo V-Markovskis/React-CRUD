@@ -2,23 +2,15 @@
   "movies": [
     {
       "id": 1,
-      "nickname": "polly",
-      "movie": "asd",
-      "review": "asd",
-      "evaluation": 1,
-      "image": "https://images.pexels.com/photos/5662857/pexels-photo-5662857.png?cs=srgb&dl=pexels-tima-miroshnichenko-5662857.jpg&fm=jpg"
-    },
-    {
-      "id": 2,
-      "nickname": "go go ",
-      "movie": "asd",
+      "nickname": "rest",
+      "movie": "hyper",
       "review": "asd",
       "evaluation": 1,
       "image": "https://images.pexels.com/photos/5662857/pexels-photo-5662857.png?cs=srgb&dl=pexels-tima-miroshnichenko-5662857.jpg&fm=jpg"
     },
     {
       "id": 3,
-      "nickname": "test",
+      "nickname": "123",
       "movie": "asd",
       "review": "asd",
       "evaluation": 1,

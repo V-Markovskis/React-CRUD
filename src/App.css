@@ -40,6 +40,34 @@ html {
     gap: 10px;
 }
 
+/* EDIT FORM */
+
+/*.editForm {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(2, 1fr);*/
+/*    max-width: 400px;*/
+/*    gap: 15px*/
+/*}*/
+
+/*.editForm input {*/
+/*    grid-column: 2;*/
+/*}*/
+
+/*.editForm label {*/
+/*    grid-column: 1;*/
+/*}*/
+
+.global-form-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr
+
+}
+
+.editForm {
+    display: grid;
+    max-width: 400px;
+    gap: 10px
+}
 
 
 
