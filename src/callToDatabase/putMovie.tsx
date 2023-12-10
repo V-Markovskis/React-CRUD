@@ -1,8 +1,9 @@
 import axios from "axios";
+import IMovie from "../components/movieType/movieInterface.tsx";
 
-const putMovie = async (id: number, callback:() => void) => {
+const putMovie = async (editedMovie: IMovie, callback:() => void) => {
     try {
-        await axios.put(`http://localhost:3000/movies/${id}`).then(() => {
+        await axios.put(`http://localhost:3000/movies/${editedMovie.id}`, editedMovie).then(() => {
             callback();
         })
     } catch (error) {

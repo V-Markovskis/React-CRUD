@@ -73,11 +73,11 @@ function App() {
     const editCurrentMovie = (movie: IMovie) => {
         setEditMode( {
             id: movie.id,
-            image: movie.image,
             nickname: movie.nickname,
             movie: movie.movie,
             review: movie.review,
-            evaluation: movie.evaluation
+            evaluation: movie.evaluation,
+            image: movie.image
         })
         console.log('editMode',editMode)
         // putMovie(movie.id, () => getMovies(setMovies)) // SHOULD NOT BE CALLED HERE?
@@ -186,17 +186,17 @@ function App() {
                         if (movie.id === editMode.id) {
                             return {
                                 ...movie,
-                                image: editMode.image,
                                 nickname: editMode.nickname,
                                 movie: editMode.movie,
                                 review: editMode.review,
-                                evaluation: editMode.evaluation
+                                evaluation: editMode.evaluation,
+                                image: editMode.image
                             }
                         }
                         return movie
                     })
                     setMovies(newEditedMovie)
-                    // putMovie(editMode.id, () => getMovies(setMovies))
+                    putMovie(editMode, () => getMovies(setMovies))
                     setEditMode(initialEditMode)
                 }}>
                     <h1>Edit movie</h1>
